@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #444;
+            margin: 0;
+        }
+        .menu {
+            flex: 1;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .menu li {
+            padding: 15px 20px;
+            cursor: pointer;
+        }
+        .menu li:hover {
+            background-color: #555;
+        }
+        .submenu {
+            display: none;
+            list-style: none;
+            margin: 0;
+            padding: 0 0 0 20px;
+        }
+        .menu li.active .submenu {
+            display: block;
+        }
+        .submenu li {
+            background-color: #444;
+            padding: 10px 20px;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .logout {
+            background-color: #444;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .logout:hover {
+            background-color: #555;
+        }
+    </style>
+    <script>
+        function toggleSubMenu(element) {
+            element.classList.toggle('active');
+        }
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul class="menu">
+            <li onclick="toggleSubMenu(this)">Menu 1
+                <ul class="submenu">
+                    <li>Submenu 1A</li>
+                    <li>Submenu 1B</li>
+                </ul>
+            </li>
+            <li onclick="toggleSubMenu(this)">Menu 2
+                <ul class="submenu">
+                    <li>Submenu 2A</li>
+                    <li>Submenu 2B</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="logout" onclick="window.location.href='{% url 'logout' %}'">
+            Logout
+        </div>
+    </div>
+    <div class="content"><div class="content">
+    <h1>Welcome, {{ user.username }} ({{ role }})</h1>
+      <p>Your role: <strong>{{ role }}</strong></p>
+
+    {% if role == 'Admin' %}
+        <p>You can manage all project data here.</p>
+    {% else %}
+        <p>You have read-only access to the data.</p>
+    {% endif %}
+{% endblock %}
+    {% if role == 'Admin' %}
+        <p>You have full access to manage data.</p>
+    {% else %}
+        <p>You can view data only. Contact Admin for changes.</p>
+    {% endif %}
+</div>
+    </div>
+</body>
+</html>
