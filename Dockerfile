@@ -1,19 +1,20 @@
-# 1. Use a lightweight base image
-FROM python:3.10-slim
+# Use official Python image
+FROM python:3.11-slim
 
-# 2. Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# 3. Set work directory inside the container
+# Set working directory
 WORKDIR /app
 
-# 4. Install dependencies
-COPY requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+# Install dependencies
+COPY requirements.txt /app/
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# 5. Copy project files into container
-COPY . .
+# Copy project files
+COPY . /app/
 
-# 6. Start the app with gunicorn (Render will inject PORT env var)
-CMD gunicorn django_dashboard.wsgi:application --bind 0.0.0.0:$PORT
+# Run Gunicorn
+CMD ["gunicorn", "django_dashboard.wsgi:application", "--bind", "0.0.0.0:$PORT"]
