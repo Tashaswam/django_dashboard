@@ -15,6 +15,5 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # 5. Copy project files into container
 COPY . .
 
-# 6. Expose dynamic port and run the app
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
+# 6. Start the app with gunicorn (Render will inject PORT env var)
+CMD gunicorn django_dashboard.wsgi:application --bind 0.0.0.0:$PORT
