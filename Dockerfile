@@ -12,4 +12,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . /app/
 
-CMD gunicorn django_dashboard.wsgi:application --bind 0.0.0.0:$PORT
+CMD sh -c "gunicorn django_dashboard.wsgi:application --bind 0.0.0.0:$PORT"
